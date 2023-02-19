@@ -1,19 +1,20 @@
 # Getting started
 
 SBC is delivered in small package, just a little-bit larger than credit card.
-![](./img/package_front.jpg)
+<br /><img src="./img/package_front.jpg" style="max-width: 800px">
+
 
 Specifications can be found on the back of the package:
-![](./img/package_back.jpg)
+<br /><img src="./img/package_back.jpg" style="max-width: 800px">
 
 After unpacking I've noticed that chip is a bit dirty, ant there are traces of flux near RAM:
-![](./img/chip.jpg)
+<br /><img src="./img/chip.jpg" style="max-width: 800px">
 
 To keep processor cold I've installed radiator 35x35x10mm. I've also installed spacers:
-![](./img/spacers_radiator.jpg)
+<br /><img src="./img/spacers_radiator.jpg" style="max-width: 800px">
 
 Top side of PCB, memory card sticks out of the slot pretty far:
-![](./img/pcb_top.jpg)
+<br /><img src="./img/pcb_top.jpg" style="max-width: 800px">
 
 After standard procedure of writing Debian image(rockpi-4b-debian-bullseye-xfce4-arm64-20221109-1447-gpt.img.xz) to Micro Sd card using balenaEtcher I've connected periferals and connected power supply.
 
