@@ -7,9 +7,9 @@
 #include <asm/io.h>
 
 #define GPIO_4_BASE		0xFF790000
-#define GPIO_4_BLOCK_SIZE	0x54 //32 * 1024 //32K
+#define GPIO_4_BLOCK_SIZE	32 * 1024 //32K
 #define GPIO_2_BASE		0xFF780000
-#define GPIO_2_BLOCK_SIZE       0x54 //32 * 1024 //32K
+#define GPIO_2_BLOCK_SIZE       32 * 1024 //32K
 
 #define OFFS_GPIO_DR		0x0000
 #define OFFS_GPIO_DDR		0x0004
@@ -68,9 +68,23 @@ void release_memory(void) {
 }
 
 
+void log_ph_mem_region(unsigned long block_base, unsigned int block_size) {
+	unsigned long i;
+	void __iomem * v_base = ioremap(block_base, block_size);
+	pr_info("READING %d BYTES STARTING %lx\n", block_size, block_base);
+	for(i = 0; i < block_size-4; i+=2){
+		unsigned long resss = (unsigned long)readw((void __iomem *)(v_base + i));
+		pr_info("ADR: %lx 	OFS:%x 		DATA: %lx\n", block_base + i,(unsigned int)i, resss);
+        }
+	iounmap(v_base);
+}
+
 int init_module(void) {
+	log_ph_mem_region(GPIO_4_BASE, 0x60);
 	gpio_v_base = ioremap(GPIO_4_BASE, GPIO_4_BLOCK_SIZE);
 	
+	pr_info("Virtual address: %p\n", gpio_v_base);
+
 	if (request_memory() == 1) 
 	{
 		pr_info("REG READ INIT\n");
@@ -92,7 +106,7 @@ void cleanup_module(void)
 		check_states();
 		release_memory();
 	}
-
+	log_ph_mem_region(GPIO_4_BASE, 0x60);
 	iounmap(gpio_v_base);
     	pr_info("GPIO virtual space unmounted.");
 } 
